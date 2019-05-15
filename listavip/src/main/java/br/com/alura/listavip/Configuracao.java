@@ -3,18 +3,15 @@ package br.com.alura.listavip;
 import javax.sql.DataSource;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.stereotype.Controller;
 
 /**
  * @author Seiji
  */
 @SpringBootApplication
-@Controller
 public class Configuracao
 {
 
@@ -24,13 +21,13 @@ public class Configuracao
     }
 
     @Bean
-    public DataSource dataSource()
+    public DataSource getDataSource()
     {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/listavip?useTimezone=true&serverTimezone=UTC");
-        dataSource.setUsername("root");
-        dataSource.setPassword("1234");
-        return dataSource;
+        DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
+        dataSourceBuilder.url("jdbc:mysql://localhost:3306/listavip?useTimezone=true&serverTimezone=UTC");
+        dataSourceBuilder.driverClassName("com.mysql.jdbc.Driver");
+        dataSourceBuilder.username("root");
+        dataSourceBuilder.password("1234");
+        return dataSourceBuilder.build();
     }
 }
